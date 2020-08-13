@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  
+  dynamodb:
+    container_name: lambda_dynamo
+    image: amazon/dynamodb-local
+    ports:
+      - "8000:8000"
+
+  sqs:
+    container_name: lambda_sqs
+    image: roribio16/alpine-sqs
+    ports:
+      - "9324:9324"
+      - "9325:9325"
+    volumes:
+      - ./sqsConfig/elasticmq.conf:/opt/config/elasticmq.conf

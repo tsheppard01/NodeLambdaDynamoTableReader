@@ -1,0 +1,14 @@
+{
+  "name": "ReadAndPostAddress",
+  "version": "1.0.0",
+  "description": "Simple app to read a list of items from a dynamo table and post them to SQS",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.731.0"
+  }
+}
