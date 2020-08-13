@@ -45,3 +45,17 @@ This hasn't been run on AWS so far, just locally.  To get running on AWS the fol
 - create the SQS queue
 
 - create IAM with permissions to read from dynamo table, permissions to read/write from the SQS
+
+
+## Code Hints
+The entry point for the lambda is the `handler.js` file.  This module should export a function 
+
+`exports.handler = (event, context) => {}`
+
+Best practice is to not have any business logic in this file, you should only perform tasks that are specific to AWS Lambdas, eg parsing input or output parameters, or any logging associated with lambda startup/shutdown.  The functions should call on to another function in another module where the business logic resides.  This allows for portable testable code.
+
+I think there are a fwe options you could use to run the lambda locally.  The most basic option is running directly. 
+ - call onto the handler function directly, passing in any event as necessary
+ - call directly on to the secondary module where the business logic exists, although this may not be possibel in every situation
+
+With either of these methods you could create a script in package.json to do this for you.  There are also other methods available sucj as using SAM local.
