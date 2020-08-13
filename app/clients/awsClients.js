@@ -6,7 +6,7 @@ function initDynamoDb() {
     if(config.IS_LOCAL) {
         return new AWS.DynamoDB.DocumentClient({
             region: config.REGION,
-            endpoint: 'http://localhost:8000'
+            endpoint: config.LOCAL_DYNAMO_ENDPOINT
         })
     }
     else {
@@ -21,7 +21,7 @@ function initSqs() {
     if(config.IS_LOCAL) {
         return new  AWS.SQS({
             region: config.REGION,
-            endpoint: 'http://localhost:9324'
+            endpoint: config.LOCAL_SQS_ENDPOINT
         })
     }
     else {

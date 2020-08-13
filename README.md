@@ -18,3 +18,8 @@ Then to run the application you need to use this testing AWS Profile, the easies
 `AWS_PROFILE=local_testing_1 node localRun.js`
 
 This hasn't been run on AWS
+
+###Needed to get running on AWS
+ - create the DynamoDB table
+ - create the SQS queue
+ - create IAM with permissions to read from dynamo table, permissions to read/write from the SQS

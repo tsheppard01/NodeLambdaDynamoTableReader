@@ -1,4 +1,5 @@
 const sqs = require("../clients/awsClients").sqsClient
+const config = require("../config")
 
 /**
  * Posts messages to a queue
@@ -7,7 +8,7 @@ const sqs = require("../clients/awsClients").sqsClient
  */
 exports.postItem = (emailAddress) => {
     var sendMessageRequest = {
-        QueueUrl: "http://localhost:9324/queue/service-queue",
+        QueueUrl: config.SQS_MESSAGE_QUEUE_URL,
         MessageBody: emailAddress
     }
     //console.log("Sending message to sqs queue")
