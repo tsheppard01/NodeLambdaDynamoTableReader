@@ -12,5 +12,7 @@
 
     LOCAL_DYNAMO_ENDPOINT: process.env.DYNAMO_ENDPOINT || 'http://localhost:8000',
     LOCAL_SQS_ENDPOINT: process.env.SQS_ENDPOINT || 'http://localhost:9324',
-    SQS_MESSAGE_QUEUE_URL: process.env.SQS_MESSAGE_QUEUE_URL || "http://localhost:9324/queue/service-queue"
+    SQS_MESSAGE_QUEUE_URL: process.env.SQS_MESSAGE_QUEUE_URL || "http://localhost:9324/queue/service-queue",
+
+    USERS_TABLE_NAME: 'users'
  }

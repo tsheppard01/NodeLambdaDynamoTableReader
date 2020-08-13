@@ -1,4 +1,5 @@
 const dynamoDB = require("../clients/awsClients").dynamoDb
+const config = require("../config")
 
 /**
  * Scans all the Items recusively then returns all items
@@ -45,7 +46,7 @@ function scanItems(lastEvaulatedKey) {
     console.log("Scanning table starting at last evaulated key", lastEvaulatedKey)
 
     var scanRequest = {
-        TableName: "users",
+        TableName: config.USERS_TABLE_NAME,
         ProjectionExpression: "UserId, Email",
         ExpressionAttributeNameMap: {
             "UserId": "userId",
