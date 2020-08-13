@@ -52,10 +52,10 @@ The entry point for the lambda is the `handler.js` file.  This module should exp
 
 `exports.handler = (event, context) => {}`
 
-Best practice is to not have any business logic in this file, you should only perform tasks that are specific to AWS Lambdas, eg parsing input or output parameters, or any logging associated with lambda startup/shutdown.  The functions should call on to another function in another module where the business logic resides.  This allows for portable testable code.
+Best practice is to not have any business logic in this file, you should only perform tasks that are specific to AWS Lambdas, eg parsing input or output parameters, or any logging associated with lambda startup/shutdown.  This function should call on to a function in another module where the business logic lives.  This allows for portable testable code.
 
-I think there are a fwe options you could use to run the lambda locally.  The most basic option is running directly. 
+I think there are a few options you could use to run the lambda locally.  The most basic option I've described above is running directly using node:
  - call onto the handler function directly, passing in any event as necessary
- - call directly on to the secondary module where the business logic exists, although this may not be possibel in every situation
+ - call directly on to the secondary module where the business logic lives, although this may not be possible in every situation
 
-With either of these methods you could create a script in package.json to do this for you.  There are also other methods available sucj as using SAM local.
+With either of these methods you could create a script in package.json to do this for you.  There are also other methods available such as using SAM local.
