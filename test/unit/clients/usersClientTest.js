@@ -37,14 +37,14 @@ beforeEach(function() {
         }
     })
 
-    usersService = proxyquire.noCallThru().load("../../../app/services/usersService", 
+    usersService = proxyquire.noCallThru().load("../../../app/clients/usersClient", 
     {
-        '../clients/awsClients': awsClients,
+        './awsClients': awsClients,
         '../config': config
     })
 })
 
-describe("services/usersService", function() {
+describe("clients/usersClient", function() {
     
     it("should scan the next items in table", function() {
 

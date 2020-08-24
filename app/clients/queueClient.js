@@ -1,4 +1,4 @@
-const sqsClient = require("../clients/awsClients").sqsClient
+const sqsClient = require("./awsClients").sqsClient
 const config = require("../config")
 
 /**

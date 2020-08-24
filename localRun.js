@@ -1,5 +1,5 @@
 const handler = require('./app/handler')
-const main = require('./app/readAndPostAddress')
+const main = require('./app/scanAndPost')
 
 console.log('Calling the lambda directly in a node app')
 
@@ -7,5 +7,5 @@ console.log('Calling the lambda directly in a node app')
 handler.handler(null, null)
 
 //Or run the main function directly
-//main()
+//main.scanAndPost()
  

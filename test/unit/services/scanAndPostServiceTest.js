@@ -4,21 +4,21 @@ const sinon = require('sinon')
 const proxyquire = require('proxyquire')
 
 var readAndPostAddress
-var queueService
-var userService
+var queueClient
+var usersClient
 
 beforeEach(function() {
-    queueService = sinon.stub()
-    userService = sinon.stub()
-    queueService.postItem = sinon.stub()
-    queueService.postAllItems = sinon.stub()
-    userService.scanAllItems = sinon.stub()
-    userService.scanNextItems = sinon.stub()
+    queueClient = sinon.stub()
+    usersClient = sinon.stub()
+    queueClient.postItem = sinon.stub()
+    queueClient.postAllItems = sinon.stub()
+    usersClient.scanAllItems = sinon.stub()
+    usersClient.scanNextItems = sinon.stub()
 
-    readAndPostAddress = proxyquire.noCallThru().load("../../app/readAndPostAddress",
+    readAndPostAddress = proxyquire.noCallThru().load("../../../app/services/scanAndPostService",
     {
-        "./services/usersService": userService,
-        "./services/queueService": queueService
+        "../clients/usersClient": usersClient,
+        "../clients/queueClient": queueClient
     })
 })
 
@@ -51,17 +51,17 @@ const resolvedAllItemsResult = [
     {MessageId: "123", Email: "abc3@abc.com"}
 ]
 
-describe('readAndPostAddress', function() {
+describe('services/scanAndPostService', function() {
 
     it('should read users and post emails to queue', function() {
         
-        userService.scanAllItems.resolves(users)
-        queueService.postAllItems.returns(postAllItemsResult)
+        usersClient.scanAllItems.resolves(users)
+        queueClient.postAllItems.returns(postAllItemsResult)
 
         return readAndPostAddress.scanAllThenPost().then(res => {
             return Promise.all(res).then( collatedRes => {
-                expect(userService.scanAllItems.callCount).to.eql(1)
-                expect(queueService.postAllItems.callCount, 1)
+                expect(usersClient.scanAllItems.callCount).to.eql(1)
+                expect(queueClient.postAllItems.callCount, 1)
                 expect(collatedRes).to.eql(resolvedAllItemsResult)
             })
         })
@@ -69,15 +69,15 @@ describe('readAndPostAddress', function() {
 
     it('should post items per scan page to queue', function() {
 
-        userService.scanNextItems.onFirstCall().resolves({Items: users, LastEvaluatedKey: "lastKey"})
-        userService.scanNextItems.onSecondCall().resolves({Items: users, LastEvaluatedKey: "lastSecondKey"})
-        userService.scanNextItems.onThirdCall().resolves({Items: users})
-        queueService.postAllItems.returns(postAllItemsResult)
+        usersClient.scanNextItems.onFirstCall().resolves({Items: users, LastEvaluatedKey: "lastKey"})
+        usersClient.scanNextItems.onSecondCall().resolves({Items: users, LastEvaluatedKey: "lastSecondKey"})
+        usersClient.scanNextItems.onThirdCall().resolves({Items: users})
+        queueClient.postAllItems.returns(postAllItemsResult)
         
         return readAndPostAddress.scanAndPost().then(res => {
             return Promise.all(res).then( collatedRes => {
-                expect(userService.scanNextItems.callCount).to.eql(3)
-                expect(queueService.postAllItems.callCount).to.eql(3)
+                expect(usersClient.scanNextItems.callCount).to.eql(3)
+                expect(queueClient.postAllItems.callCount).to.eql(3)
                 expect(collatedRes).to.eql(
                     resolvedAllItemsResult
                     .concat(resolvedAllItemsResult)

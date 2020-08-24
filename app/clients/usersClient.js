@@ -1,4 +1,4 @@
-const dynamoDB = require("../clients/awsClients").dynamoDb
+const dynamoDB = require("./awsClients").dynamoDb
 const config = require("../config")
 
 /**

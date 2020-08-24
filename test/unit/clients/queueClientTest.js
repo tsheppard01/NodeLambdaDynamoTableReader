@@ -22,14 +22,14 @@ beforeEach(function (){
     config = sinon.stub()
     config.SQS_MESSAGE_QUEUE_URL = "TESTURL"
 
-    queueService = proxyquire.noCallThru().load('../../../app/services/queueService',
+    queueService = proxyquire.noCallThru().load('../../../app/clients/queueClient',
     {
-        '../clients/awsClients': awsClients,
+        './awsClients': awsClients,
         '../config': config
     })
 })
 
-describe('services/queueService', function() {
+describe('clients/queueClient', function() {
 
     it('should post multiple items to sqs', function () {
         
