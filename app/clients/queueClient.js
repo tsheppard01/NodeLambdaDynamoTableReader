@@ -1,5 +1,6 @@
 const sqsClient = require("./awsClients").sqsClient
 const config = require("../config")
+const { reject } = require("bluebird")
 
 /**
  * Takes an array of messages to post to the queue
