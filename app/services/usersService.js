@@ -4,14 +4,16 @@ const config = require("../config")
 /**
  * Scans all the Items recusively then returns all items
  */
-exports.scanAllItems = () => {
+exports.scanAllItems = (lastEvaulatedKey) => {
 
-    return scanItems().then( (data, err) => {
+    return scanItems(lastEvaulatedKey).then( (data, err) => {
+        console.log("Scaned items: ", data.Items.length)
         if(data.LastEvaluatedKey) {
-            return data.Items.concat(this.scanItems(data.LastEvaluatedKey))
+            return this.scanAllItems(data.LastEvaluatedKey).then( nextData => {
+                return data.Items.concat(nextData)
+            })
         }
         else {
-            console.log("Scaned items: ", data.Items.length)
             return data.Items
         }
     })
@@ -48,12 +50,8 @@ function scanItems(lastEvaulatedKey) {
     var scanRequest = {
         TableName: config.USERS_TABLE_NAME,
         ProjectionExpression: "UserId, Email",
-        ExpressionAttributeNameMap: {
-            "UserId": "userId",
-            "Email": "emailAddress"
-        },
         ExclusiveStartKey: lastEvaulatedKey
     }
-    
+        
     return dynamoDB.scan(scanRequest).promise()
 }

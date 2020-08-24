@@ -15,10 +15,14 @@ const main = require("./readAndPostAddress")
 exports.handler = (event, context) => {
     console.log("Entering the Request Handler for Example Lambda")
     console.log("Getting config for the main processing")
-    // Get/build the config, from env or maybe consul
-    const config = {
-        isLocal: true
-    }
-    main()
-    console.log("Completed processing for Example Lamnda")
+
+    return main.stuffAgain()
+    // return main.stuffAgain().then( res => {
+    //     console.log("Completed processing in Example Lambda, exiting")
+    // })
+    // main.scanAllThenPost().then(res => {
+    //     Promise.allSettled(res).then( finishedRes => {
+    //         console.log("Completed Processing")
+    //     })
+    // })
 }
