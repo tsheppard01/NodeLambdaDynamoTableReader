@@ -55,7 +55,10 @@ exports.scanAndPost = () => {
                 failNum = results.rejected.length
             }
 
-            return {Success: successNum, Fail: failNum}
+            return {
+                Success: successNum, 
+                Fail: failNum
+            }
         })
     })
 }
