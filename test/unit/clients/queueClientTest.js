@@ -62,8 +62,6 @@ describe('clients/queueClient', function() {
         return Promise.allSettled(
             queueService.postAllItems(["TestEvent1", "TestEvent2", "TestEvent3"])
         ).then(res => {
-            console.log(res)
-
             const results = lodash.groupBy(res, 'status')
             expect(
                 results.fulfilled.map(item => {

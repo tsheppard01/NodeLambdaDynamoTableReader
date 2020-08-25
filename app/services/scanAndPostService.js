@@ -35,9 +35,9 @@ exports.scanAllThenPost = () => {
  * 
  * @param {} lastEvaulatedKey 
  */
-exports.scanAndPost = () => {
+exports.scanAndPost = (lastEvaluatedKey) => {
 
-    return usersClient.scanNextItems().then((data) =>{
+    return usersClient.scanNextItems(lastEvaluatedKey).then((data) =>{
 
         const postItemsResult = queueClient.postAllItems(
             data.Items.map( item => {
@@ -48,6 +48,11 @@ exports.scanAndPost = () => {
         if(data.LastEvaluatedKey) {
             return this.scanAndPost(data.LastEvaluatedKey).then(nextData => {
                 return postItemsResult.concat(nextData)
+            }).catch( err => {
+                console.log("Encountered error when attempting to retrieve items from dynamo, ExclusiveStartKey: ", lastEvaluatedKey)
+                console.log("In this case we just stop processing, some items will have already been processed " + 
+                    "but now we can't process the remaining items")
+                return postItemsResult
             })
         }
         else {

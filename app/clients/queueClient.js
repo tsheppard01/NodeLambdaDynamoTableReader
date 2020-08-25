@@ -13,6 +13,7 @@ exports.postAllItems = (emailAddresses) => {
             return { MessageId: res.MessageId, Email: emailAddress}
         }).catch( err => {
             console.log(`Encountered an error while posting item ${emailAddress} to sqs: `, err)
+            console.log("Nonfatal, Carrying on to the next item")
             return Promise.reject({MessageId: undefined, Email: emailAddress})
         })
     })

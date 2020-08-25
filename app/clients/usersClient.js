@@ -16,6 +16,11 @@ exports.scanAllItems = (lastEvaulatedKey) => {
         else {
             return data.Items
         }
+    }).catch(err => {
+        console.log("An error occured, but I still want to process whats already been retrieved")
+        console.log("Theres a chance this could be a silent failure")
+        console.log("Alternative is to just rethrow (or not catch) the error, if we don't read all the table then should just start lambda again")
+        return []
     })
 }
 
