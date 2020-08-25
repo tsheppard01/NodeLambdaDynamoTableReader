@@ -50,7 +50,7 @@ This hasn't been run on AWS so far, just locally.  To get running on AWS the fol
 ## Code Hints
 The entry point for the lambda is the `handler.js` file.  This module should export a function 
 
-`exports.handler = (event, context) => {}`
+`exports.handler = async (event, context) => {}`
 
 Best practice is to not have any business logic in this file, you should only perform tasks that are specific to AWS Lambdas, eg parsing input or output parameters, or any logging associated with lambda startup/shutdown.  This function should call on to a function in another module where the business logic lives.  This allows for portable testable code.
 
