@@ -1,4 +1,4 @@
-const dynamoDB = require("./awsClients").dynamoDb
+const dynamoDb = require("./aws/dynamoDbClient")
 const config = require("../config")
 
 /**
@@ -6,7 +6,7 @@ const config = require("../config")
  */
 exports.scanAllItems = (lastEvaulatedKey) => {
 
-    return scanItems(lastEvaulatedKey).then( (data, err) => {
+    return scanItems(lastEvaulatedKey).then( data => {
         console.log("Scaned items: ", data.Items.length)
         if(data.LastEvaluatedKey) {
             return this.scanAllItems(data.LastEvaluatedKey).then( nextData => {
@@ -28,21 +28,6 @@ exports.scanNextItems = (lastEvaulatedKey) => {
     return scanItems(lastEvaulatedKey)
 }
 
-/**
- * Reads a single item from dynamo
- */
-exports.getItem = () => {
-    var getRequest = {
-        TableName: "users",
-        Key: {
-            "UserId": 1
-        }
-    }
-
-    console.log("running get")
-    return dynamoDB.get(getRequest).promise()
-}
-
 function scanItems(lastEvaulatedKey) {
     
     console.log("Scanning table starting at last evaulated key", lastEvaulatedKey)
@@ -53,5 +38,5 @@ function scanItems(lastEvaulatedKey) {
         ExclusiveStartKey: lastEvaulatedKey
     }
         
-    return dynamoDB.scan(scanRequest).promise()
+    return dynamoDb.scan(scanRequest)
 }

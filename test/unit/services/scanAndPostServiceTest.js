@@ -34,15 +34,9 @@ const users = [
 ]
 
 const postAllItemsResult = [
-    new Promise((resolve, reject) => {
-        resolve({MessageId: "123", Email: "abc@abc.com"})
-    }),
-    new Promise((resolve, reject) => {
-        resolve({MessageId: "123", Email: "abc2@abc.com"})
-    }),
-    new Promise((resolve, reject) => {
-        resolve({MessageId: "123", Email: "abc3@abc.com"})
-    }),
+    Promise.resolve({MessageId: "123", Email: "abc@abc.com"}),
+    Promise.resolve({MessageId: "123", Email: "abc2@abc.com"}),
+    Promise.resolve({MessageId: "123", Email: "abc3@abc.com"})
 ]
 
 const resolvedAllItemsResult = [

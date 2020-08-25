@@ -1,6 +1,5 @@
-const sqsClient = require("./awsClients").sqsClient
+const sqsClient = require("./aws/sqsClient")
 const config = require("../config")
-const { reject } = require("bluebird")
 
 /**
  * Takes an array of messages to post to the queue
@@ -12,6 +11,9 @@ exports.postAllItems = (emailAddresses) => {
     return emailAddresses.map(emailAddress => {
         return postItem(emailAddress).then( res => {
             return { MessageId: res.MessageId, Email: emailAddress}
+        }).catch( err => {
+            console.log(`Encountered an error while posting item ${emailAddress} to sqs: `, err)
+            return Promise.reject({MessageId: undefined, Email: emailAddress})
         })
     })
 }
@@ -21,8 +23,7 @@ function postItem(emailAddress) {
         QueueUrl: config.SQS_MESSAGE_QUEUE_URL,
         MessageBody: emailAddress
     }
-    //console.log("Sending message to sqs queue")
-    return sqsClient.sendMessage(sendMessageRequest).promise()
+    return sqsClient.sendMessage(sendMessageRequest)
 }
 
 

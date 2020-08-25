@@ -17,27 +17,15 @@ beforeEach(function() {
 })
 
 const scanAndPostServiceResult = [
-    new Promise((resolve, reject) => {
-        resolve({MessageId: "123", Email: "abc@abc.com"})
-    }),
-    new Promise((resolve, reject) => {
-        resolve({MessageId: "123", Email: "abc2@abc.com"})
-    }),
-    new Promise((resolve, reject) => {
-        resolve({MessageId: "123", Email: "abc3@abc.com"})
-    }),
+    Promise.resolve({MessageId: "123", Email: "abc@abc.com"}),
+    Promise.resolve({MessageId: "123", Email: "abc2@abc.com"}),
+    Promise.resolve({MessageId: "123", Email: "abc3@abc.com"})
 ]
 
 const scanAndPostServiceRejectResult = [
-    new Promise((resolve, reject) => {
-        reject({MessageId: "123", Email: "abc@abc.com"})
-    }),
-    new Promise((resolve, reject) => {
-        resolve({MessageId: "123", Email: "abc2@abc.com"})
-    }),
-    new Promise((resolve, reject) => {
-        resolve({MessageId: "123", Email: "abc3@abc.com"})
-    }),
+    Promise.reject({MessageId: "123", Email: "abc@abc.com"}),
+    Promise.resolve({MessageId: "123", Email: "abc2@abc.com"}),
+    Promise.resolve({MessageId: "123", Email: "abc3@abc.com"})
 ]
 
 describe("scanAndPost", function() {
