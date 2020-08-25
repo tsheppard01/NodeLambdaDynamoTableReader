@@ -12,7 +12,7 @@ const main = require("./scanAndPost")
  * @param {} event 
  * @param {*} context 
  */
-exports.handler = (event, context) => {
+exports.handler = async (event, context) => {
     console.log("Entering the Request Handler for Example Lambda")
 
     return main.scanAndPost().then(res => {
